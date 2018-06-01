@@ -14,7 +14,19 @@ public enum PaginationError: Error {
     case unspecified(Error)
 }
 
-public protocol Paginatable: Model where Self.Database: QuerySupporting {
+public protocol PaginationResponse: Content {
+    
+    static var defaultPageSize: Int { get }
+}
+
+extension PaginationResponse {
+    
+    public static var defaultPageSize: Int {
+        return 10
+    }
+}
+
+public protocol Paginatable: Model, PaginationResponse where Self.Database: QuerySupporting {
     static var defaultPageSize: Int { get }
     static var maxPageSize: Int? { get }
     static var defaultPageSorts: [QuerySort] { get }

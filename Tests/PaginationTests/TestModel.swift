@@ -41,3 +41,13 @@ extension TestModel {
         return try TestModel(name: name).save(on: connection).wait()
     }
 }
+
+extension TestModel {
+    
+    struct Response: Content {
+        
+        var name: String
+    }
+}
+
+extension TestModel.Response: PaginationResponse { }

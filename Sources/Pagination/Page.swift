@@ -9,7 +9,7 @@ import Foundation
 import Fluent
 import Vapor
 
-public struct Page<M: Model & Paginatable> {
+public struct Page<M: PaginationResponse> {
     public let number: Int
     public let data: [M]
     public let size: Int

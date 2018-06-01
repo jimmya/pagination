@@ -48,6 +48,20 @@ final class PaginationTests: XCTestCase {
         XCTAssertEqual(pageInfo.total, 20)
         XCTAssertEqual(pageResponse.page.position.max, 2)
     }
+    
+    func testDecode() throws {
+        let models = try [
+            TestModel.create(name: "Test 1", on: self.sqlConnection),
+            TestModel.create(name: "Test 2", on: self.sqlConnection),
+            TestModel.create(name: "Test 3", on: self.sqlConnection),
+            TestModel.create(name: "Test 4", on: self.sqlConnection),
+            TestModel.create(name: "Test 5", on: self.sqlConnection)
+        ]
+        
+        let pageInfo = try TestModel.query(on: self.sqlConnection).decode(TestModel.Response.self).paginate(page: 1).wait()
+        
+        XCTAssertEqual(pageInfo.total, models.count)
+    }
 
     static var allTests = [
         ("testQuery", testQuery),
